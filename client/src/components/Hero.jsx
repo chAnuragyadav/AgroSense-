@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const quotes = [
   ["Farming looks mighty easy when your plow is a pencil, and you're a thousand miles from the corn field.", "Dwight D. Eisenhower"],
@@ -20,14 +21,14 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="hero">
+    <section className="hero">
       <div className="hero-copy">
         <span className="eyebrow">Precision farming, simplified</span>
         <h1>Know your soil.<br />Water with confidence.</h1>
         <p>Look up the soil type for your district and get a 3-day irrigation estimate based on the live weather forecast.</p>
         <div className="hero-actions">
-          <a className="btn primary" href="#soil">Find my soil</a>
-          <a className="btn ghost" href="#irrigation">Calculate irrigation</a>
+          <Link className="btn primary" to="/soil">Find my soil</Link>
+          <Link className="btn ghost" to="/irrigation">Calculate irrigation</Link>
         </div>
       </div>
       <figure className="quote-card" aria-live="polite">

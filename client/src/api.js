@@ -15,6 +15,7 @@ const post = (url, body) =>
 export const api = {
   states: () => request("/api/states"),
   districts: (state) => request(`/api/districts?state=${encodeURIComponent(state)}`),
+  weather: (state, district) => request(`/api/weather?state=${encodeURIComponent(state)}&district=${encodeURIComponent(district)}`),
   crops: () => request("/api/crops"),
   irrigation: (payload) => post("/api/irrigation", payload),
   contact: (payload) => post("/api/contact", payload),

@@ -28,7 +28,7 @@ export default function SoilFinder() {
   const [color, tip] = soilInfo[soil] || [];
 
   return (
-    <section id="soil" className="section">
+    <section className="section page">
       <div className="section-head">
         <span className="eyebrow">Step 1</span>
         <h2>Soil Information</h2>

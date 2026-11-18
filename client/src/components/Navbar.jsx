@@ -1,25 +1,20 @@
 import { useState } from "react";
+import { NavLink, Link } from "react-router-dom";
 
-const links = [
-  ["Home", "#home"],
-  ["Soil", "#soil"],
-  ["Irrigation", "#irrigation"],
-  ["About", "#about"],
-];
+const links = [["Home", "/"], ["Soil", "/soil"], ["Irrigation", "/irrigation"], ["Weather", "/weather"]];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
     <header className="navbar">
-      <a href="#home" className="brand"><img src="/images/logo.png" alt="AgroSense" /></a>
+      <Link to="/" className="brand" onClick={() => setOpen(false)}><img src="/images/logo.png" alt="AgroSense" /></Link>
       <button className="menu-btn" aria-label="Toggle menu" onClick={() => setOpen(!open)}>
         <span /><span /><span />
       </button>
       <nav className={`nav-links ${open ? "open" : ""}`}>
-        {links.map(([label, href]) => (
-          <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>
+        {links.map(([label, to]) => (
+          <NavLink key={to} to={to} end={to === "/"} onClick={() => setOpen(false)}>{label}</NavLink>
         ))}
-        <a href="https://joyful-lily-3aa271.netlify.app/" target="_blank" rel="noreferrer">Weather ↗</a>
       </nav>
     </header>
   );

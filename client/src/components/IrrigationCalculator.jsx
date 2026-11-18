@@ -39,7 +39,7 @@ export default function IrrigationCalculator() {
   const max = result ? Math.max(...result.days.map((d) => d.mm), 1) : 1;
 
   return (
-    <section id="irrigation" className="section">
+    <section className="section page">
       <div className="section-head">
         <span className="eyebrow">Step 2</span>
         <h2>Calculate Irrigation</h2>

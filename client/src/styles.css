@@ -106,3 +106,27 @@ textarea { resize: vertical; }
   .grid, .days { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+
+/* Multi-page additions */
+.nav-links a.active { background: var(--green-700); color: var(--white); }
+.page { padding-top: 130px; min-height: 70vh; }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.feature { text-decoration: none; display: flex; flex-direction: column; gap: 8px; transition: .25s; }
+.feature:hover { transform: translateY(-6px); }
+.feature-icon { font-size: 2rem; }
+.feature p { color: var(--muted); flex: 1; }
+.feature-link { color: var(--green-700); font-weight: 600; }
+.now { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.now img { width: 90px; height: 90px; background: var(--green-100); border-radius: 50%; }
+.temp { font: 700 2.4rem var(--font-display); color: var(--green-900); }
+.temp small { font: 500 1rem var(--font-body); color: var(--muted); text-transform: capitalize; }
+.stats { list-style: none; display: flex; gap: 12px; margin-left: auto; flex-wrap: wrap; }
+.stats li { background: var(--green-100); border-radius: 12px; padding: 10px 16px; display: flex; flex-direction: column; }
+.stats span { font-size: .75rem; color: var(--green-700); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.forecast { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+.fday { background: var(--green-100); border-radius: 14px; padding: 14px 8px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.fday img { width: 56px; }
+.fday small { color: var(--muted); font-weight: 500; }
+.rain { font-size: .82rem; color: var(--green-700); }
+@media (max-width: 860px) { .features { grid-template-columns: 1fr; } .forecast { grid-template-columns: repeat(3, 1fr); } .stats { margin-left: 0; } }
+@media (max-width: 560px) { .forecast { grid-template-columns: repeat(2, 1fr); } }

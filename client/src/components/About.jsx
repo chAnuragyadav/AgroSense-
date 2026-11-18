@@ -18,7 +18,7 @@ export default function About() {
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
   return (
-    <section id="about" className="section">
+    <section className="section">
       <div className="card split about">
         <div>
           <img className="about-logo" src="/images/logo2.png" alt="AgroSense logo" />

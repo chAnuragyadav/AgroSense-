@@ -71,6 +71,44 @@ app.get("/api/history", wrap(async (_req, res) => {
   res.json(await Calculation.find().sort("-createdAt").limit(5));
 }));
 
+
+// ---- Weather ----
+app.get("/api/weather", wrap(async (req, res) => {
+  const { state, district } = req.query;
+  if (!state || !district) return res.status(400).json({ error: "state and district are required" });
+  const key = process.env.OPENWEATHER_API_KEY;
+  if (!key) return res.status(500).json({ error: "Weather API key is not configured on the server." });
+
+  const q = encodeURIComponent(`${district},${state}`);
+  const base = "https://api.openweathermap.org/data/2.5";
+  const [curRes, fcRes] = await Promise.all([
+    fetch(`${base}/weather?q=${q}&appid=${key}&units=metric`),
+    fetch(`${base}/forecast?q=${q}&appid=${key}&units=metric`),
+  ]);
+  if (!curRes.ok || !fcRes.ok) return res.status(502).json({ error: "Could not fetch weather for that location." });
+  const cur = await curRes.json();
+  const fc = await fcRes.json();
+
+  const byDate = {};
+  for (const slot of fc.list) {
+    const d = slot.dt_txt.slice(0, 10);
+    const day = (byDate[d] ||= { date: d, min: Infinity, max: -Infinity, rain: 0, icon: slot.weather[0].icon, text: slot.weather[0].main });
+    day.min = Math.min(day.min, slot.main.temp_min);
+    day.max = Math.max(day.max, slot.main.temp_max);
+    day.rain += slot.rain?.["3h"] ?? 0;
+    if (slot.dt_txt.includes("12:00:00")) { day.icon = slot.weather[0].icon; day.text = slot.weather[0].main; }
+  }
+
+  res.json({
+    location: `${district}, ${state}`,
+    current: {
+      temp: cur.main.temp, feelsLike: cur.main.feels_like, humidity: cur.main.humidity,
+      wind: cur.wind.speed, description: cur.weather[0].description, icon: cur.weather[0].icon,
+    },
+    forecast: Object.values(byDate).slice(0, 5).map((d) => ({ ...d, rain: Number(d.rain.toFixed(1)) })),
+  });
+}));
+
 // ---- Contact ----
 app.post("/api/contact", wrap(async (req, res) => {
   const { name, email, message } = req.body;
